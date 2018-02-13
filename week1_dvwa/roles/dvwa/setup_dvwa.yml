@@ -1,0 +1,65 @@
+####################################################################
+# Apt update
+####################################################################
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+####################################################################
+# Install/Setup Docker
+####################################################################
+- name: Install Docker required software
+  package:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - apt-transport-https 
+    - ca-certificates 
+    - curl 
+    - software-properties-common
+    - python3-pip
+
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repo
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial xerus stable
+    state: present
+
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: Install Docker
+  package:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - docker-ce
+
+- name: Install Docker-py 
+  pip:
+    name: docker-py
+    executable: pip3
+
+- name: Start Docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+####################################################################
+# Create DVWA container
+####################################################################
+- name: Create DVWA container
+  docker_container:
+    name: dvwa
+    image: vulnerables/web-dvwa
+    state: started
+    restart_policy: always
+    ports:
+      - 80:80

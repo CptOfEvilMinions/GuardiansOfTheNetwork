@@ -1,0 +1,6 @@
+- hosts: dvwa
+  become: yes
+  become_user: root
+  tasks:
+    - import_tasks: roles/dvwa/setup_dvwa.yml
+    
