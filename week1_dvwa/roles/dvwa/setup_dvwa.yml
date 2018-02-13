@@ -55,11 +55,25 @@
 ####################################################################
 # Create DVWA container
 ####################################################################
-- name: Create DVWA container
+- name: Create pentetsing DVWA container
   docker_container:
-    name: dvwa
-    image: vulnerables/web-dvwa
+    name: dvwa_pwn
+    image: infoslack/dvwa
     state: started
+    recreate: yes
+    restart_policy: always
+    ports:
+      - 8080:80
+
+####################################################################
+# Create DVWA container
+####################################################################
+- name: Create DEMO DVWA container
+  docker_container:
+    name: dvwa_demo
+    image: infoslack/dvwa
+    state: started
+    recreate: yes
     restart_policy: always
     ports:
       - 80:80
