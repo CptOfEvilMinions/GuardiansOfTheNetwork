@@ -15,7 +15,7 @@ This week we are using DVWA for our incident response demo. DVWA provides a brok
 
 ## Perform attack
 ### Nikto scanner
-0. nikto -host http://52.53.172.255
+0. nikto -host http://benatcost.hackinglab.beer
 
 ### Zip, upload and unzip c99.php
 0. Start Kali Linux VM
@@ -28,7 +28,7 @@ This week we are using DVWA for our incident response demo. DVWA provides a brok
 0. Select "Choose file", "c99.php.gz" then "Upload"
 0. Select "Command injection" on the right
 0. Enter "/bin/gunzip -v ../../hackable/uploads/c99.php" into "Enter ip address"
-0. Browse to http://<IP addr of DVWA>/hackable/uploads/c99.php
+0. Browse to http://benatcost.hackinglab.beer/hackable/uploads/c99.php
 
 ### Dump database
 0. mysql -u root -e "show databases;"
@@ -39,6 +39,7 @@ This week we are using DVWA for our incident response demo. DVWA provides a brok
 ## Incident reponse demo
 ### Understanding the machine
 It is important to understand the machine you are investigating
+
 0. What is the operating system of the attacker machine?
 0. What is the kernel of the attacked machine?
 0. What timezone  of the attacked machine?
@@ -78,7 +79,7 @@ It is important to understand the machine you are investigating
 
 ### Red team challenge
 Create a PHP reverse shell with Metasploit
-* attack: http://<IP addr of DVWA>:8080
+* attack: http://benatcost.hackinglab.beer:8080
 * DO NOT ATTACK port 80
 
 ### Restart Docker container if corrupted
