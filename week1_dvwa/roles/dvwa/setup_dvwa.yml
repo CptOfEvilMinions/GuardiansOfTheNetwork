@@ -29,7 +29,6 @@
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial xerus stable
     state: present
 
-
 - name: Run the equivalent of "apt-get update" as a separate step
   apt:
     update_cache: yes
@@ -57,9 +56,9 @@
 ####################################################################
 - name: Create pentetsing DVWA container
   docker_container:
-    name: dvwa_pwn
+    name: dvwa_pwn_temp
     image: infoslack/dvwa
-    state: started
+    state: present
     recreate: yes
     restart_policy: always
     ports:
@@ -70,9 +69,9 @@
 ####################################################################
 - name: Create DEMO DVWA container
   docker_container:
-    name: dvwa_demo
+    name: dvwa_demo_temp
     image: infoslack/dvwa
-    state: started
+    state: present
     recreate: yes
     restart_policy: always
     ports:
