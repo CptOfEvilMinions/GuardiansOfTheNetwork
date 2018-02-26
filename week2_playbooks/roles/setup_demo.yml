@@ -1,0 +1,75 @@
+####################################################################
+# Apt update
+####################################################################
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+####################################################################
+# Install/Setup BIND 9 DNS server
+####################################################################
+- name: Install BIND
+  package:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - vim 
+    - curl 
+    - wget 
+    - net-tools 
+    - bind9 
+    - bind9utils 
+    - bind9-doc 
+    - dnsutils 
+    - tcpdump
+
+- name: Copy named.conf
+  template:
+    src: conf/bind/named.conf
+    dest: /etc/bind/named.conf
+
+- name: Create /etc/bind/zones directory
+  file:
+    path: /etc/bind/zones
+    owner: bind
+    group: bind
+    state: directory
+
+- name: Copy zones
+  template:
+    src: conf/bind/blockeddomains.db
+    dest: /etc/bind/zones/blockeddomains.db
+
+- name: Copy blacklist
+  template:
+    src: conf/bind/blacklisted.zones
+    dest: /etc/bind/zones/blacklisted.zones
+
+- name: Get root hints file
+  get_url:
+    url: http://www.internic.net/domain/named.root
+    dest: /etc/bind/root.servers
+    mode: 0440
+
+- name: Chown it bind dir
+  file:
+    path: /etc/bind
+    owner: bind
+    group: bind
+    recurse: yes
+
+- name: Restart bind server
+  service:
+    name: bind9
+    state: restarted
+    enabled: yes
+    
+####################################################################
+#  Slack notification
+####################################################################
+- name: Send slack notification when done
+  slack:
+    token: "{{ slack_token }}"
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Setup DNS demo - {{ ansible_nodename }}'
+    channel: "{{ slack_channel }}"
+  when: slack_token != None
