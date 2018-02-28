@@ -5,7 +5,7 @@ This week we covered the attack life cycle to gain an understanding of adversari
 The information contained in this presentation/demo is for educational purposes ONLY! RC3 nor its members hold any responsibility for any misuse of the information provided in any slides, discussions, activities, or exercises.
 
 ## Presentation
-Becoming the adversary: 
+Becoming the adversary: https://docs.google.com/presentation/d/1r7gffW9kZ_mkHTJArXjMgpshJ1WK_OzCYIdM5Tr3i4c/edit?usp=sharing
 
 ## Demo
 0. Create malicious stager for Microsoft Word document
