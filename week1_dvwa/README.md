@@ -75,7 +75,7 @@ Intro to IR: https://docs.google.com/presentation/d/1SOx2SieLxJHPF1jzgPRR2ax-q90
 ### Understanding the machine
 It is important to understand the machine you are investigating
 
-0. What is the operating system(OS) of the hacker's machine?
+0. What is the operating system(OS) of the attacked machine?
 0. What is the kernel of the attacked machine?
 0. What is the timezone of the attacked machine?
 0. What is the IP address of the attacked machine?
@@ -93,6 +93,7 @@ It is important to understand the machine you are investigating
 0. What is the timezone and time format of the webservers logs? Why does this matter?
 0. What is the hackers's IP address?
 0. What is the hacker's user-agent?
+0. What is the operating system(OS) of the hacker's machine?
 0. What webshell did the attacker use? 
 0. Where was that webshell uploaded to?
 0. What commands/actions did the attacker use?

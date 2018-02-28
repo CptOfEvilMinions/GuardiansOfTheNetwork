@@ -3,4 +3,3 @@ zone "buymalwarehere.ru" {type master; file "/etc/bind/zones/blockeddomains.db";
 zone "s23a93884skf.net" {type master; file "/etc/bind/zones/blockeddomains.db";};
 zone "almost-somedodgeybank.com" {type master; file "/etc/bind/zones/blockeddomains.db";};
 zone "google.co.uk" {type master; file "/etc/bind/zones/blockeddomains.db";};
-

@@ -6,6 +6,44 @@
     update_cache: yes
 
 ####################################################################
+# Setup user
+####################################################################
+- name: Create user
+  user:
+    name: '{{ ir_user }}'
+    shell: /bin/bash
+
+- name: Set user password
+  shell: echo "{{ ir_user }}:{{ ir_passwd }}" | chpasswd
+
+- name: Copy dns script
+  copy:
+    src: conf/dns_blacklist.sh
+    dest: /home/{{ ir_user }}/dns_blacklist.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+# Quick and dirty modification. Not proud of this :/
+- name: Modify sudoers
+  lineinfile:
+    dest: '/etc/sudoers'
+    line: '{{ ir_user }} ALL=NOPASSWD: /bin/systemctl restart bind9.service'
+    insertafter: '^%sudo'
+
+- name: Enable SSH password auth
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication yes'
+
+- name: Restart SSH
+  service:
+    name: ssh
+    state: restarted
+    enabled: yes
+
+####################################################################
 # Install/Setup BIND 9 DNS server
 ####################################################################
 - name: Install BIND
@@ -40,11 +78,6 @@
     src: conf/bind/blockeddomains.db
     dest: /etc/bind/zones/blockeddomains.db
 
-- name: Copy blacklist
-  template:
-    src: conf/bind/blacklisted.zones
-    dest: /etc/bind/zones/blacklisted.zones
-
 - name: Get root hints file
   get_url:
     url: http://www.internic.net/domain/named.root
@@ -58,14 +91,22 @@
     group: bind
     recurse: yes
 
+# ir_user needs editing access
+- name: Copy blacklist
+  template:
+    src: conf/bind/blacklisted.zones
+    dest: /etc/bind/zones/blacklisted.zones
+    owner: '{{ ir_user }}'
+    group: bind
+
 - name: Restart bind server
   service:
     name: bind9
     state: restarted
     enabled: yes
-    
+
 ####################################################################
-#  Slack notification
+# Slack notification
 ####################################################################
 - name: Send slack notification when done
   slack:
