@@ -19,8 +19,37 @@ Becoming the adversary: https://docs.google.com/presentation/d/1r7gffW9kZ_mkHTJA
 0. Plany persistence
 0. Complete mission
 
+
+## Scripting challenges
+Write a script in any language of your choosing to detect common methods of initial compromise and persistence on Windows.
+
+0. Script should detect if the firewall is on/off
+0. Script should detect malicious instances of Powershell.exe
+    1. Hint "-enc [base64 string]" in starting command
+0. Script should print scheduled tasks that were created in the last 24 hours
+    1. Time interval can be a variable or something of your choosing.
+0. Script should print items in the Winlogon location in the Windows Registry
+0. Script should print items in the Autostart location in the Windows Registry
+0. Script should print items in the Winlogon location in the Windows Registry
+0. Get Windows DNS cache
+
+
+## Red team challenge
+Watch this video by Black Hills Infosec on how to automate Powershell Empire: https://www.blackhillsinfosec.com/empire-resource-files-auto-runs-docx/. 
+Create a resource file(s) to do the actions below. DO NOT attack any machines you DO NOT OWN OR DO NOT HAVE AUTHORIZATION to attack.
+
+0. Creates an HTTPS listener:
+    1. Set beacon interval to 30 seconds
+    1. Changes default profile
+    1. Changes default user-agent
+0. Autorun for agents:
+    1. Takes a screenshot of desktop
+    1. Deploys a keylogger
+    1. Places a persistent mechanism
+
 # Resources/Sources
 * Blog: https://www.powershellempire.com/
 * Github: https://github.com/EmpireProject/Empire
 * YouTube: https://www.youtube.com/watch?v=aDeJBe6eqps
 * Blog: https://enigma0x3.net/2015/08/26/empire-tips-and-tricks/
+* Blog: https://www.blackhillsinfosec.com/empire-resource-files-auto-runs-docx
