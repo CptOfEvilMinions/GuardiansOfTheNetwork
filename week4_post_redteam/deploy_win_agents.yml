@@ -1,0 +1,4 @@
+- hosts: win_agents
+  tasks:
+    - win_ping:
+    - import_tasks: roles/winlogbeat/setup_winlogbeat.yml

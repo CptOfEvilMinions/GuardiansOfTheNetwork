@@ -1,0 +1,4 @@
+[graylog]
+54.219.185.132 ansible_python_interpreter=/usr/bin/python3 timeout=30
+
+[win_agents]

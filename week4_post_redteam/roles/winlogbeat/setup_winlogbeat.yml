@@ -1,0 +1,61 @@
+####################################################################
+# Install/Setup Winbeat
+####################################################################
+- name: Stat on Wibeat Download
+  win_stat:
+    path: '%TEMP%\winlogbeat-5.6.3-windows-x86_64.zip'
+  register: stat_dl
+
+- name: Download Winbeat
+  win_get_url:
+    url: https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-6.0.0-windows-x86_64.zip
+    dest: '%TEMP%\winlogbeat-6.0.0-windows-x86_64.zip'
+    timeout: 30
+  when: stat_dl.stat.exists == False
+
+- name: Unzip a Winbeat
+  win_unzip:
+    src: '%TEMP%\winlogbeat-6.0.0-windows-x86_64.zip'
+    dest: '%TEMP%'
+    creates: '%TEMP%\winlogbeat-6.0.0-windows-x86_64'
+    delete_archive: yes
+  when: stat_dl.stat.exists == False
+
+- win_file:
+    path: 'C:\Program Files\winlogbeat'
+    state: directory
+  when: stat_dl.stat.exists == False
+
+- name: Copy Winbeat contents
+  win_copy:
+    src: '%TEMP%\winlogbeat-6.0.0-windows-x86_64\'
+    dest: 'C:\Program Files\winlogbeat'
+    remote_src: yes
+
+- name: Set Execution policy to restricted
+  win_shell: Set-ExecutionPolicy Unrestricted
+
+- name: Install Winlogbeat as Windows service
+  win_shell: .\install-service-winlogbeat.ps1
+  args:
+    chdir: C:\Program Files\winlogbeat
+
+- name: Copy Winbeat config
+  win_template:
+    src: conf/winlogbeat/winlogbeat.yml
+    dest: 'C:\Program Files\winlogbeat\winlogbeat.yml'
+
+- name: Restart a service
+  win_service:
+    name: winlogbeat
+    state: restarted
+
+####################################################################
+#  Slack notification
+####################################################################
+- name: Send slack notification when done
+  slack:
+    token: "{{ slack_token }}"
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Finished setting up Winlogbeat on {{ ansible_nodename }}'
+    channel: "{{ slack_channel }}"
+  when: slack_token is undefined

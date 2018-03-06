@@ -1,0 +1,17 @@
+################# Basic setup #################
+base_domain: hackinglab.beer
+timezone: America/New_York
+
+################# Slack #################
+slack_channel:
+slack_token:
+
+################# Graylog #################
+graylog_hostname: graylog
+graylog_admin_password: 
+
+################# Cert generation #################
+cert_country: US
+cert_state: NY
+cert_local: Rochester
+cert_org: HackingLab
