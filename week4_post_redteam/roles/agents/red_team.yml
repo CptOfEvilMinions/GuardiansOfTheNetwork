@@ -1,0 +1,15 @@
+####################################################################
+# Run Powershell Empire
+####################################################################
+- name: Run Powershell Empire stager
+  win_shell: ipconfig
+
+####################################################################
+# Slack notification
+####################################################################
+- name: Send slack notification when done
+  slack:
+    token: "{{ slack_token }}"
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Run Powershell Empire stager - {{ ansible_nodename }}'
+    channel: "{{ slack_channel }}"
+  when: slack_token != None

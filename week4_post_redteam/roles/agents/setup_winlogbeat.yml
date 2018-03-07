@@ -58,4 +58,4 @@
     token: "{{ slack_token }}"
     msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Finished setting up Winlogbeat on {{ ansible_nodename }}'
     channel: "{{ slack_channel }}"
-  when: slack_token is undefined
+  when: slack_token != None

@@ -4,6 +4,9 @@ Last week we simulated being a red team adversary by going through each stage of
 ## Presentation
 Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0EHkpWrKp5XdH0swXvVA/edit?usp=sharing 
 
+## Cred sheet
+Creds: https://docs.google.com/document/d/1b9bcy3_5CRM_pr996KVKsfEDnir8TkMPG2ewzTlPX38/edit?usp=sharing
+
 ## Demo setup
 ### Setup Graylog
 0. mv group_vars/all.example group_vars/all
@@ -40,14 +43,25 @@ Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0E
 
 ### Sysinternals - Process Explorer
 0. What do the colors represent?
-0. How do you verify a process with VirusTotal?
-0. Discover how to display network connections for a particular process.
+0. What is the PID of Explorer.exe?
+0. What is the PPID of Explorer.exe?
+0. What is the start time of Explorer.exe?
+0. What is the path of the Explorer.exe?
+0. What is the command line of Explorer.exe?
+0. How do you verify Explorer.exe with VirusTotal?
+0. Discover how to display network connections for Explorer.exe.
 
 ### Sysinternals - TCPView
-
-### Sysinternals - Procmon
+0. What do the colors represent?
+0. What port does LSASS listen on?
+0. How can you correlate network connections to procsses in Process Explorer?
 
 ### Sysinternals - Autoruns
+0. What does Autoruns list?
+0. Which tab displays startup items
+0. Which tab displays that run at login 
+0. What are the locations of three tabs in Autoruns?
+    1. For example, Autoruns shows startup items which is located in the Registry. Provide the Registry path.
 
 ### Event Viewer - Stop service
 0. Open a run prompt
@@ -70,7 +84,7 @@ Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0E
 0. You will need TWO boxes for this activity
 0. Open Powershell prompt
 0. cd C:\_CSECTOOLS
-0. .\psexec -u student -p student \\[remote hostname] New-LocalUser -Name "eviluser" -Password "password123"
+0. .\psexec -u student -p student \\[remote hostname] New-LocalUser ipconfig
 0. Open Windows event viewer on remote machine and find:
     1. The logon event and the logon type
     1. What time did the user logon
@@ -83,11 +97,35 @@ Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0E
     1. Find the event ID that created the service
     1. What is the service name?
 
+### Graylog - Finding Powershell stager
+0. Browse to https://graylog.hackinglab.beer
+    1. Username: [Graylog username - cred sheet above] 
+    1. Password: [Graylog password - cred sheet above]
+0. Select the search tab
+0. Enter "[beginning string of powershell stager]" and hit enter
+0. Sift through data and find entry for:
+    1. What is the Powershell stager command?
+    1. What time did the stager detonate?
+    1. What is the Powershell PID?
+    1. What is the hostname of the machine this stager was detonated on?
+    1. What is the document ID?
+    1. Is this document the first occurence of this stager being detonated?
+        2. If not, go find it!!! 
+        
+### Graylog - Analyzing attack            
+0. Decode the base64 Powershell Empire stager to get:
+    1. What is the user-agent being used?
+    1. What is the IP addr of the teamserver?
+    1. What is the cookie session ID?
+    1. What is the URL the stager is calling back too?
+0. Search for "[URL for stager]"
+0. Find document that contains the Powershell Empire agent(NOT stager) code
+    1. What are three built-in functions of the agent?
+
 ## Scripting challenges
 0. Create a Powershell script to parse the Windows Event logs for:
     1. When a service is disabled - include name and time
     1. When a process - include name, time, start user and binary location
-    1. When 
 0. Create a Powershell script to:
     1. Enable the Windows Firewall for ALL profiles
     1. Blocks all connections for inbound,outbound
@@ -95,7 +133,7 @@ Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0E
     1. Allows outbound connections for http, https, dns
 
 ## Red team challenge
- DO NOT USE/WRITE this script to attack/control machines you DO NOT own OR have written authorization
+DO NOT USE/WRITE this script to attack/control machines you DO NOT own OR have written authorization
 
 0. Create a script that log into each computer in the CSEC LAB to do:
     1. Get the process list

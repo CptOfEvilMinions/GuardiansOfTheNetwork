@@ -1,4 +1,5 @@
 - hosts: win_agents
   tasks:
     - win_ping:
-    - import_tasks: roles/winlogbeat/setup_winlogbeat.yml
+    - import_tasks: roles/agents/setup_winlogbeat.yml
+    - import_tasks: roles/agents/red_team.yml
