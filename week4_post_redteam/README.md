@@ -1,4 +1,5 @@
 # Post red team
+Last week we simulated being a red team adversary by going through each stage of the attack life cycle. This we will review the steps taken at each stage of our attack from perspective of a blue teamer. We touch on the Sysinternals toolkit, how to read Windows event logs, and using a log aggregating service like Gralog.
 
 ## Presentation
 Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0EHkpWrKp5XdH0swXvVA/edit?usp=sharing 
@@ -13,6 +14,11 @@ Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0E
 0. ansible-playbook -i hosts deploy_graylog.yml -u [user]
 
 ### Setup Windows agents
+0. vim hosts and set [win_agents]
+0. vim group_vars/win_agents and set:
+    1. ansible_username
+    1. ansible_password
+0. ansible-playbook -i hosts deploy_win_agents.yml
 
 ## Demo
 ### Lookup 
@@ -34,8 +40,8 @@ Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0E
 
 ### Sysinternals - Process Explorer
 0. What do the colors represent?
-0. How do you verify a process?
-0.  
+0. How do you verify a process with VirusTotal?
+0. Discover how to display network connections for a particular process.
 
 ### Sysinternals - TCPView
 
