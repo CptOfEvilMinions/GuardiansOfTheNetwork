@@ -1,5 +1,5 @@
 # Post red team
-Last week we simulated being a red team adversary by going through each stage of the attack life cycle. This we will review the steps taken at each stage of our attack from perspective of a blue teamer. We touch on the Sysinternals toolkit, how to read Windows event logs, and using a log aggregating service like Gralog.
+Last week we simulated being an adversary by stepping through each stage of the attack life cycle with Powershell Empire. This week we will review the steps taken at each stage of our attack from perspective of a defender. The demo this week will touch on the Sysinternals toolkit, how to investigate the Windows event logs, and how to use a log aggregating service like Gralog.
 
 ## Presentation
 Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0EHkpWrKp5XdH0swXvVA/edit?usp=sharing 
@@ -133,13 +133,14 @@ Creds: https://docs.google.com/document/d/1b9bcy3_5CRM_pr996KVKsfEDnir8TkMPG2ewz
     1. Allows outbound connections for http, https, dns
 
 ## Red team challenge
-DO NOT USE/WRITE this script to attack/control machines you DO NOT own OR have written authorization
+DO NOT USE/WRITE this script(s) to attack/control machines you DO NOT own OR have written authorization to do so!!!
 
-0. Create a script that log into each computer in the CSEC LAB to do:
+0. Create a script that will log into each computer in the CSEC LAB and retrieve:
     1. Get the process list
     1. Get the network services
     1. Get local users
     1. Run command "ipconfig"
+0. Create a script that will log into each computer in the CSEC lab and detonate a Powershell Empire stager
 
 # Resources/Sources
 * https://social.technet.microsoft.com/Forums/Lync/en-US/ff70e069-5453-4250-b5c7-8d52ce558ce2/logon-types-in-windows-server?forum=winserverDS
