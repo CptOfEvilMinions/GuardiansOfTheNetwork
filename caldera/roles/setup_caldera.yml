@@ -1,0 +1,54 @@
+####################################################################
+# Create Docker image
+####################################################################
+- name: Copy Dockerfile
+  copy:
+    src: Dockerfile
+    dest: $HOME/Dockerfile
+
+- name: Copy Mongo config file
+  copy:
+    src: conf/mongo/mongodb.conf
+    dest: $HOME/mongodb.conf
+
+- name: Copy start.sh file
+  copy:
+    src: conf/caldera/start.sh
+    dest: $HOME/start.sh
+
+- name: Create docker image for caldera
+  docker_image:
+    name: caldera_image
+    path: $HOME
+
+####################################################################
+# Start docker image
+####################################################################
+- name: Start Caldera image
+  docker_container:
+    name: caldera
+    image: caldera_image
+    hostname: '{{ caldera_hostname }}'
+    ports:
+      - 8888:8888
+    state: started
+    restart_policy: always
+    recreate: yes
+
+####################################################################
+# User perms
+####################################################################
+- name: Add Docker group to ubuntu user
+  user:
+    name: ubuntu
+    group: docker
+    
+####################################################################
+# Slack notification
+####################################################################
+- name: Send slack notification when done
+  slack:
+    token: "{{ slack_token }}"
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Created Caldera docker image - {{ ansible_nodename }}'
+    channel: "{{ slack_channel }}"
+  when: slack_token != None

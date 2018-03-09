@@ -1,0 +1,7 @@
+- hosts: caldera
+  become: yes
+  become_user: root
+  tasks:
+    - import_tasks: roles/setup_docker.yml
+    - import_tasks: roles/setup_caldera.yml
+    - import_tasks: roles/setup_user.yml

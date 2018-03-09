@@ -1,0 +1,35 @@
+####################################################################
+# Create user
+####################################################################
+- name: Create user {{ second_user }}
+  user:
+    name: '{{ second_user }}'
+    password: '{{ second_pass }}'
+    shell: '/bin/bash'
+    comment: 'Member account'
+    group: docker
+
+####################################################################
+# Setup SSH
+####################################################################   
+- name: Modify SSH login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication yes'
+
+- name: Restart SSH daemon
+  service:
+    name: ssh
+    state: restarted
+    enabled: yes
+
+####################################################################
+# Slack notification
+####################################################################
+- name: Send slack notification when done
+  slack:
+    token: "{{ slack_token }}"
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Created user {{ second_user }} - {{ ansible_nodename }}'
+    channel: "{{ slack_channel }}"
+  when: slack_token != None

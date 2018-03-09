@@ -1,0 +1,8 @@
+################## 
+base_domain: 
+caldera_hostname: caldera
+timezone: America/New_York
+
+################## Slack ##################
+slack_channel:
+slack_token:
