@@ -16,6 +16,21 @@
 0. ansible-playbook -i hosts deploy_caldera.yml -u [username]
 
 ## Deploy Caldera agent
+Caldera ONLY supports Windows clients for this application. Additionally this agent can only be used in the CSEC lab!!!
+
+### Reset docker image on server
+0. Login into server: ssh [username from cred sheet]@caldera.hackinglab.beer
+    1. Use password from cred sheet
+0. docker restart caldera
+0. Logout
+
+### Setup hosts for agent
+0. vim hosts and set "[win_agents]"
+0. mv groups_vars/windows.example groups_vars/windows
+0. vim groups_vars/windows and set:
+    1. ansible_user
+    1. ansible_password
+0. ansible-playbook -i hosts deploy_win_agents.yml 
 
 # Supported OSes
 * Ubuntu Server 16.04 64-bit
