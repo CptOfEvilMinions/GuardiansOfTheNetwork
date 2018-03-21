@@ -24,7 +24,9 @@ Caldera ONLY supports Windows clients for this application. Additionally this ag
 0. docker restart caldera
 0. Logout
 
-### Setup hosts for agent
+### Setup host for Caldera agent
+0. On a CSEC lab host machine open a Powershell prompt as Administrator
+0. Run `powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))"`
 0. vim hosts and set "[win_agents]"
 0. mv groups_vars/windows.example groups_vars/windows
 0. vim groups_vars/windows and set:
@@ -64,13 +66,14 @@ Caldera ONLY supports Windows clients for this application. Additionally this ag
     1. Select “active user” as the starting user
     1. Enter “explorer.exe” for parent process
     1. UNcheck “Auto-cleanup”
-        2. I want to leave the artifacts behind for future posts 🙂
+        2. I want to leave the artifacts behind for future posts
     1. Enter a desired command delay
     1. Enter a desired jitter
     1. Select “Submit”
 
 # Supported OSes
 * Ubuntu Server 16.04 64-bit
+* Windows 10 64-bit
 
 # Resources/Sources
 * https://holdmybeersecurity.com/2018/01/13/install-setup-mitre-caldera-the-automated-cyber-adversary-emulation-system/

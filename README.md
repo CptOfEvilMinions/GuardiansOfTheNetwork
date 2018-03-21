@@ -10,4 +10,4 @@ Last week we had a review of last week's demo and a discussion on lessons learne
 This week we covered the attack life cycle to gain an understanding of adversaries. The demo walked through how to become the adversary and walk through each stage of the attack life cycle.
 
 ## Week 4 - Post red team
-Last week we simulated being an adversary by stepping through each stage of the attack life cycle with Powershell Empire. This week we will review the steps taken at each stage of our attack from perspective of a defender. The demo this week will touch on the Sysinternals toolkit, how to investigate the Windows event logs, and how to use a log aggregating service like Gralog.
+Last week we simulated being an adversary by stepping through each stage of the attack life cycle with Powershell Empire. This week we will review the steps taken at each stage of our attack from perspective of a defender. The demo this week will touch on the Sysinternals toolkit, how to investigate the Windows event logs, and how to use a log aggregating service like Graylog.
