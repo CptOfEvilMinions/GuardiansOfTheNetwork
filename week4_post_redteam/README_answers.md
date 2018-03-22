@@ -1,10 +1,88 @@
 # Post red team
-Last week we simulated being an adversary by stepping through each stage of the attack life cycle with Powershell Empire. This week we will review the steps taken at each stage of our attack from perspective of a defender. The demo this week will touch on the Sysinternals toolkit, how to investigate the Windows event logs, and how to use a log aggregating service like Graylog.
+Last week we simulated being an adversary by stepping through each stage of the attack life cycle with Powershell Empire. This week we will review the steps taken at each stage of our attack from perspective of a defender. The demo this week will touch on the Sysinternals toolkit, how to investigate the Windows event logs.
 
 ## Presentation
 Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0EHkpWrKp5XdH0swXvVA/edit?usp=sharing 
 
 ## Demo
+### Sysinternals - Find Empire
+#### Process Explorer
+0. What do the colors represent?
+    1. Bright green - new process
+    1. Bright red - terminated process
+    1. Light blue - Process running as you(user your logged in as)
+    1. Light pink - Windows service
+    1. Dark gray - Suspended process
+    1. Bright blue - Application/process from Windows store
+    1. Purple - Packed process - indicator of malware 
+0. What is the PID of Explorer.exe?
+    1. Will change
+0. What is the PPID of Explorer.exe?
+    1. Will change
+0. What is the start time of Explorer.exe?
+    1. Will change
+0. What is the path of the Explorer.exe?
+    1. C:\Windows\explorer.exe
+0. What is the command line of Explorer.exe?
+    1. C:\Windows\Explorer.EXE
+0. How do you verify Explorer.exe with VirusTotal?
+    1. Select "verify"
+0. Discover how to display network connections for Explorer.exe.
+    1. Select "TCP/IP" tab
+0. What is the PID of the Powershell.exe?
+    1. Will change
+0. What is the PPID of the Powershell.exe?
+    1. Should be the PPID of Powershell.exe
+0. What is the start time of Explorer.exe?
+    1. Will change
+0. What is the path of the Powershell.exe?
+    1. C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+0. What is the command line of Explorer.exe?
+    1. "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -noP -sta -w 1 -enc [base64 encoded stager]"
+0. Submit the process hash to VirusTotal. What is the result?
+    1. 0/62 because Powershell isn't malcious :)
+
+#### TCPView
+0. What do the colors represent?
+    1. Green - Initated connection
+    1. Red - Terminated connection
+0. What port does LSASS listen on?
+    1. Port 49691
+0. How can you correlate network connections to procsses in Process Explorer?
+    1. By process ID(PID)
+0. What port is Powershell connecting TO?
+    1. Port 80
+0. What IP address is Powershell connecting TO?
+    1. 10.80.100.x
+0. Why isn't Powershell keeping a persitent connection?
+    1. It's an HTTP beacon
+
+#### Autoruns
+0. What does Autoruns list?
+    1. The most comprehensive knowledge of auto-starting locations of any startup monitor, shows you what programs are configured to run during system bootup or login, and when you start various built-in Windows applications like Internet Explorer, Explorer and media players.
+    1. Source: https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
+0. What do the colors represent?
+    1. Pink - Digital signature doesn't exist or doesn't match
+    1. Yellow - Entry doesn't exist anymore 
+0. Which tab(s) displays startup items
+    1. Scheduled tasks
+    1. Services
+    1. Drivers
+0. Which tab(s) displays that run at login 
+    1. Winlogon
+    1. Explorer
+    1. Logon
+0. What are the locations of three tabs in Autoruns?
+    1. Winlogon - Registry: HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon
+    1. Drivers - File system:  C:\Windows\system32\drivers 
+    1. Explorer - Registry: HKLM\Software\Classes\*\ShellEx	
+0. What is the default name of Empire persistence mechanism?
+    1. Updater
+0. Where is the peristence mechanism located?
+    1. HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+0. What time was the persistence mechanism implanted?
+    1. Will change
+
 ### Windows core elements 
 0. Service accounts:
     1. The three service accounts on Windows?
@@ -61,105 +139,68 @@ Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0E
     1. Main source: Google lol
     1. Secondary source: https://isc.sans.edu/forums/diary/Windows+Events+log+for+IRForensics+Part+1/21493
 
-### Sysinternals
-#### Process Explorer
-0. What do the colors represent?
-    1. Bright green - new process
-    1. Bright red - terminated process
-    1. Light blue - Process running as you(user your logged in as)
-    1. Light pink - Windows service
-    1. Dark gray - Suspended process
-    1. Bright blue - Application/process from Windows store
-    1. Purple - Packed process - indicator of malware 
-0. What is the PID of Explorer.exe?
-    1. Will change
-0. What is the PPID of Explorer.exe?
-    1. Will change
-0. What is the start time of Explorer.exe?
-    1. Will change
-0. What is the path of the Explorer.exe?
-    1. C:\Windows\explorer.exe
-0. What is the command line of Explorer.exe?
-    1. C:\Windows\Explorer.EXE
-0. How do you verify Explorer.exe with VirusTotal?
-    1. Select "verify"
-0. Discover how to display network connections for Explorer.exe.
-    1. Select "TCP/IP" tab
-
-#### TCPView
-0. What do the colors represent?
-    1. Green - Initated connection
-    1. Red - Terminated connection
-0. What port does LSASS listen on?
-    1. Port 49691
-0. How can you correlate network connections to procsses in Process Explorer?
-    1. By process ID(PID)
-
-#### Autoruns
-0. What does Autoruns list?
-0. Which tab displays startup items
-0. Which tab displays that run at login 
-0. What are the locations of three tabs in Autoruns?
-    1. For example, Autoruns shows startup items which is located in the Registry. Provide the Registry path.
-
-### Event Viewer - Stop service
-0. Open a run prompt
-0. Enter "services.msc"
-0. Find "Windows Updates" and STOP service
-0. Refresh Event Viewer find the EID
-0. What is the:
-    1. What is service name?
-    1. What is the user that did the action?
-    1. What is the timestamp?
-    1. Was the action active or interactive
-
-### Event Viewer -  Disable Windows Firewal
+### Event Viewer
+#### Stop service
 0. 
 
-### Event Viewer - Enable Powershell logging
+#### Disable Windows Firewal
 0. 
 
-### Event Viewer -  PSexec to another box
+#### PSexec to remote box
 0. You will need TWO boxes for this activity
 0. Open Powershell prompt
 0. cd C:\_CSECTOOLS
-0. .\psexec -u student -p student \\[remote hostname] New-LocalUser ipconfig
+0. .\psexec \\[remote hostname] ipconfig
 0. Open Windows event viewer on remote machine and find:
-    1. The logon event and the logon type
-    1. What time did the user logon
-    1. What command was run
-    1. Find the event ID that created the service
-0. .\psexec -u student -p student -r memes \\[remote hostname] New-LocalUser -Name "eviluser" -Password "password123"
-    1. The logon event and the logon type
-    1. What time did the user logon
-    1. What command was run
-    1. Find the event ID that created the service
-    1. What is the service name?
+    1. PSExec creates a service on the remote host. Where are service events logged to in Windows Event Viewer?
+        2. System core log
+    1. What is the Event ID and description?
+        2. EventID  - 7045
+        2. Description - A service was installed on the system
+    1. What is the service name and service account?
+        2. Name - PSEXESVC
+        2. Account - SYSTEM
+    1. What user was used to logon?
+        2. [HOSTNAME]\student
+    1. What time did the user logon?
+        2. Will change
+    1. Where are logon events stored in Windows Event Viewer?
+        2. Security
+    1. What was the remote source IP and port?
+        2. IP - will change
+        2. Port - Will change
+    1. What is the logon type? 
+        2. Type 3 - Network logon
+    1. What command was run?
+        2. We don't have proper logging to know the commands run :/
 
-### Graylog - Finding Powershell stager
-0. Browse to https://graylog.hackinglab.beer
-    1. Username: [Graylog username - cred sheet above] 
-    1. Password: [Graylog password - cred sheet above]
-0. Select the search tab
-0. Enter "[beginning string of powershell stager]" and hit enter
-0. Sift through data and find entry for:
-    1. What is the Powershell stager command?
-    1. What time did the stager detonate?
-    1. What is the Powershell PID?
-    1. What is the hostname of the machine this stager was detonated on?
-    1. What is the document ID?
-    1. Is this document the first occurence of this stager being detonated?
-        2. If not, go find it!!! 
-        
-### Graylog - Analyzing attack            
-0. Decode the base64 Powershell Empire stager to get:
-    1. What is the user-agent being used?
-    1. What is the IP addr of the teamserver?
-    1. What is the cookie session ID?
-    1. What is the URL the stager is calling back too?
-0. Search for "[URL for stager]"
-0. Find document that contains the Powershell Empire agent(NOT stager) code
-    1. What are three built-in functions of the agent?
+#### PSexec with Powershell logging
+##### Enable Powershell logging
+0. On the remote machine
+0. Open a run prompt and enter "gpedit.msc"
+0. Expand Computer Configuration > Administrative Templates > Windows Components > Windows Powershell
+0. Enable "Turn on Powershell Script Block Logging"
+    1. This trick is a gift from red team
+
+##### PSexec to remote box
+0. .\psexec -r memes \\[remote hostname] powershell
+0. Run "net user /add eviluser password123"
+    1. What is the service name and service account?
+        2. Name - memes
+        2. Account - LocalSystem
+    1. What user was used to logon?
+        2. [HOSTNAME]\student
+    1. What time did the user logon?
+        2. Will change
+    1. What was the remote source IP and port?
+        2. IP - will change
+        2. Port - Will change
+    1. What is the logon type? 
+        2. Type 3 - Network logon
+    1. Where are the Powershell logs located?
+        2. Applications and Services Logs > Microsoft > Windows > Powershell > Operational
+    1. What comamnd was run?
+        2. Command run above
 
 ## Scripting challenges
 0. Create a Powershell script to parse the Windows Event logs for:
@@ -173,7 +214,6 @@ Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0E
 
 ## Red team challenges
 DO NOT USE/WRITE this script(s) to attack/control machines you DO NOT own OR have written authorization to do so!!!
-
 0. Create a script that will log into each computer in the CSEC LAB and retrieve:
     1. Get the process list
     1. Get the network services
