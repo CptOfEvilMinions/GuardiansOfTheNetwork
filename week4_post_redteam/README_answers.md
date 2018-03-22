@@ -29,15 +29,16 @@ Post red team: https://docs.google.com/presentation/d/1gE5ScvxbL9my0a233l9EUIj0E
     1. Select "verify"
 0. Discover how to display network connections for Explorer.exe.
     1. Select "TCP/IP" tab
-0. What is the PID of the Powershell.exe?
+0. What is the PID of the Empire shell(malicious Powershell.exe)?
     1. Will change
+0. What is the parent process of the Empire shell?
 0. What is the PPID of the Powershell.exe?
-    1. Should be the PPID of Powershell.exe
-0. What is the start time of Explorer.exe?
+    1. Should be the PPID of Empire shell?
+0. What is the start time of Empire shell?
     1. Will change
-0. What is the path of the Powershell.exe?
+0. What is the path of the Empire shell?
     1. C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-0. What is the command line of Explorer.exe?
+0. What is the command line of Empire shell?
     1. "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -noP -sta -w 1 -enc [base64 encoded stager]"
 0. Submit the process hash to VirusTotal. What is the result?
     1. 0/62 because Powershell isn't malcious :)
