@@ -1,5 +1,5 @@
 # Caldera the automated cyber adversary emulation system
-TO RUN A SIMULATION PLEASE SELECT "Creating_Caldera_Operation.md"
+**TO RUN A SIMULATION PLEASE SELECT "Creating_Caldera_Operation.md"**
 
 ## Deploy Caldera server
 0. sudo apt install whois
@@ -12,9 +12,11 @@ TO RUN A SIMULATION PLEASE SELECT "Creating_Caldera_Operation.md"
     1. base_domain
     1. caldera_hostname
     1. timezone
+    1. caldera_user - username to login into caldera webapp
+    1. caldera_pass - password to login into caldera webapp
     1. second_user
     1. second_pass to the output from mkpasswd
-0. ansible-playbook -i hosts deploy_caldera.yml -u [username]
+0. ansible-playbook -i hosts deploy_caldera_server.yml -u [username]
 
 # Supported OSes
 * Ubuntu Server 16.04 64-bit

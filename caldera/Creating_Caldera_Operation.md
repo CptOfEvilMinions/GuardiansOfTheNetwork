@@ -1,8 +1,9 @@
 # Caldera the automated cyber adversary emulation system
 ## Deploy Caldera agent
-Caldera ONLY supports Windows clients for this application. Additionally this agent can only be used in the CSEC lab!!!
+Caldera **ONLY supports Windows clients** for this application. Additionally this agent can only be used in the CSEC lab!!!
 
-## Cred sheets
+## Cred sheet
+* https://docs.google.com/document/d/1CXH1JkyB3MfsM0OIIDDIRkhaezOA-wq3RU7_rOvIX6w/edit?usp=sharing
 
 ### Reset docker image on server
 0. Login into server: ssh [username from cred sheet]@caldera.ritsec.club
@@ -18,10 +19,13 @@ Caldera ONLY supports Windows clients for this application. Additionally this ag
 0. vim groups_vars/windows and set:
     1. ansible_user
     1. ansible_password
-0. ansible-playbook -i hosts deploy_win_agents.yml 
+0. ansible-playbook -i hosts deploy_caldera_agent.yml 
 
 ## Create Caldera operation
 ### Creating an adversary
+0. Browse https://caldera.ritsec.club:8888 and login with creds
+    1. username - cred sheet
+    2. password - cred sheet
 0. Select “Threat” then “Create adversary”
     1. Enter “test_adversary” as the name
     1. Select different adversary tactics from the steps drop down menu

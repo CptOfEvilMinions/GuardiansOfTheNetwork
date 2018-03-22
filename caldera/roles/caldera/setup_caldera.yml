@@ -33,7 +33,7 @@
   docker_container:
     name: caldera
     image: caldera_image
-    hostname: '{{ caldera_hostname }}'
+    hostname: '{{ caldera_hostname }}.{{ base_domain }}'
     ports:
       - 8888:8888
     state: started
