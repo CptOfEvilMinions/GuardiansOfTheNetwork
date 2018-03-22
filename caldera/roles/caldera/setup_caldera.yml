@@ -11,6 +11,11 @@
     src: conf/mongo/mongodb.conf
     dest: $HOME/mongodb.conf
 
+- name: Copy settings.yaml for Caldera
+  template:
+    src: conf/caldera/settings.yaml
+    dest: $HOME/settings.yaml
+
 - name: Copy start.sh file
   copy:
     src: conf/caldera/start.sh
@@ -34,14 +39,6 @@
     state: started
     restart_policy: always
     recreate: yes
-
-####################################################################
-# User perms
-####################################################################
-- name: Add Docker group to ubuntu user
-  user:
-    name: ubuntu
-    group: docker
     
 ####################################################################
 # Slack notification

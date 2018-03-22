@@ -69,6 +69,11 @@
     state: started
     enabled: yes
 
+- name: Add Docker group to ubuntu user
+  user:
+    name: ubuntu
+    group: docker
+
 ####################################################################
 # Slack notification
 ####################################################################

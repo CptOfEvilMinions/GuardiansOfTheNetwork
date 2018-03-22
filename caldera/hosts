@@ -1,5 +1,5 @@
 [caldera]
-54.215.232.205 ansible_python_interpreter=/usr/bin/python3 timeout=30
+172.16.17.140 ansible_python_interpreter=/usr/bin/python3 timeout=30
 
 [windows:children]
 win_agents

@@ -10,6 +10,7 @@ RUN mkdir /opt/caldera
 RUN git clone https://github.com/mitre/caldera.git /opt/caldera
 
 WORKDIR /opt/caldera/caldera
+COPY settings.yaml /opt/caldera/caldera/conf/settings.yaml
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 
