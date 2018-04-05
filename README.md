@@ -11,3 +11,9 @@ This week we covered the attack life cycle to gain an understanding of adversari
 
 ## Week 4 - Post red team
 Last week we simulated being an adversary by stepping through each stage of the attack life cycle with Powershell Empire. This week we will review the steps taken at each stage of our attack from perspective of a defender. The demo this week will touch on the Sysinternals toolkit, how to investigate the Windows event logs.
+
+## Week 5 - OSQuery day
+This week is all about OSQuery and how to use it for incident response and threat hunting. The intro to OSQuery was given by some of our own Guardians. Enjoy
+
+## Week 6 - Windows compeititon incident response
+This week we reviewed basic controls and mechanisms about Windows. Then we looked at how they can be abused by red team. We reviewed how to make a general five minute plan. Finally, we did a demo on sysinternals.
