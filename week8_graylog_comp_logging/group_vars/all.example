@@ -1,0 +1,16 @@
+#################### Base info ####################
+base_domain: 
+graylog_hostname: 
+timezone: America/New_York
+
+#################### Graylog info ####################
+graylog_admin_password: 
+cert_country: 
+cert_state: 
+cert_local: 
+cert_org: 
+cert_common_name: '{{ graylog_hostname }}.{{ base_domain }}'
+
+#################### Slack info ####################
+slack_channel: 
+slack_token: 
