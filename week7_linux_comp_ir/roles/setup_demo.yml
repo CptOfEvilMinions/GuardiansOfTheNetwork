@@ -1,0 +1,70 @@
+####################################################################
+# Setup user
+####################################################################
+- name: Create user
+  user:
+    name: '{{ ir_user }}'
+    shell: /bin/bash
+    groups:
+      - sudo
+
+- name: Set user password
+  shell: echo "{{ ir_user }}:{{ ir_passwd }}" | chpasswd
+
+- name: Enable SSH password auth
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication yes'
+
+- name: Restart SSH
+  service:
+    name: ssh
+    state: restarted
+    enabled: yes
+
+####################################################################
+# Install/Setup VSFTPd
+####################################################################
+- name: Install/Setup VSFTPd
+  package:
+    name: '{{ item }}'
+    state: latest
+  with_items: 
+    - 'vsftpd'
+ 
+- name: Start VSFTPd
+  service:
+    name: 'vsftpd'
+    state: restarted
+    enabled: yes    
+
+####################################################################
+# Install/Setup Mongo and redis
+####################################################################
+- name: Install random services
+  package:
+    name: '{{ item }}'
+    state: latest
+  with_items: 
+    - 'redis-server'
+    - 'mongodb-server'
+
+- name: Start random services
+  service:
+    name: '{{ item }}'
+    state: restarted
+    enabled: yes
+  with_items: 
+    - 'redis'
+    - 'mongodb'    
+
+####################################################################
+# Slack notification
+####################################################################
+- name: Send slack notification when done
+  slack:
+    token: "{{ slack_token }}"
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Setup DNS demo - {{ ansible_nodename }}'
+    channel: "{{ slack_channel }}"
+  when: slack_token != None

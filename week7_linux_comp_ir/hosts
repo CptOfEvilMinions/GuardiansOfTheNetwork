@@ -1,0 +1,6 @@
+[linux_agents]
+54.183.167.167 ansible_python_interpreter=/usr/bin/python3 timeout=30
+54.193.109.213 ansible_python_interpreter=/usr/bin/python3 timeout=30
+13.56.164.42 ansible_python_interpreter=/usr/bin/python3 timeout=30
+52.53.191.23 ansible_python_interpreter=/usr/bin/python3 timeout=30
+52.53.124.215 ansible_python_interpreter=/usr/bin/python3 timeout=30
