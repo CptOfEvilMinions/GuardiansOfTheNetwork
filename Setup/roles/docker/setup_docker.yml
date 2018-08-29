@@ -1,0 +1,111 @@
+########################################################################
+# Install/Setup Docker
+########################################################################
+- name: Remove old versions of Docker
+  package:
+    name: '{{ item }}'
+    state: absent
+  with_items:
+    - docker
+    - docker-engine 
+    - docker.io
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+
+- name: Install things
+  package:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+    - python3
+    - python3-pip
+
+- name: Add an Apt signing key for Docker
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repo
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic beaver stable
+    state: present
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: Install Docker
+  package:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - docker-ce
+
+- name: Start Docker service
+  service:
+    name: docker
+    state: restarted
+    enabled: yes
+
+- name: Create primary swarm manager"
+  shell: docker swarm init --advertise-addr {{ ansible_default_ipv4.address }}
+  ignore_errors: yes
+
+- name: Install docker-compose
+  pip:
+    name: docker-compose
+    executable: pip3   
+
+########################################################################
+# Setup UFW
+########################################################################
+- name: Enable UFW and block all by default
+  ufw:
+    state: enabled
+    policy: deny
+
+- name: Enable UFW logging
+  ufw:
+    logging: on
+
+- name: Allow SSH
+  ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+    src: 129.21.0.0/16
+
+- name: Allow port 80, 443, 5000, 8080 ONLY FROM RIT
+  ufw:
+    rule: allow
+    port: '{{ item }}'
+    proto: tcp
+    src: 129.21.0.0/16
+  with_items:
+    - 80
+    - 443
+    - 2376
+    - 2377
+    - 5000
+    - 7946
+    - 8080 
+
+####################################################################
+#  Slack notification
+####################################################################
+- name: Send slack notification when done
+  slack:
+    token: "{{ slack_token }}"
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Setup Docker - {{ ansible_nodename }}'
+    channel: "{{ slack_channel }}"
+  when: slack_token != None
