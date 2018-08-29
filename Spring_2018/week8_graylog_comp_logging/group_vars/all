@@ -1,0 +1,16 @@
+#################### Base info ####################
+base_domain: hackinglab.beer
+graylog_hostname: graylog
+timezone: America/New_York
+
+#################### Graylog info ####################
+graylog_admin_password: PartyLike1969!
+cert_country: US
+cert_state: NY
+cert_local: Rochester
+cert_org: hackinglab.beer
+cert_common_name: '{{ graylog_hostname }}.{{ base_domain }}'
+
+#################### Slack info ####################
+slack_channel: ig-guardians-demo
+slack_token: T07782NK1/B9E40PWRK/rFCv1pWIKejtwYrznjlwMYhK

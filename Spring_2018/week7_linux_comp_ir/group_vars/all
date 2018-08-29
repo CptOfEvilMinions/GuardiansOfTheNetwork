@@ -1,0 +1,11 @@
+#################### Slack info ####################
+slack_channel: ig-guardians-demo
+slack_token: T07782NK1/B9E40PWRK/rFCv1pWIKejtwYrznjlwMYhK
+
+#################### Graylog ####################
+base_domain: hackinglab.beer
+graylog_hostname: graylog
+
+#################### User info ####################
+ir_user: pquill
+ir_passwd: PartyLike1969!
