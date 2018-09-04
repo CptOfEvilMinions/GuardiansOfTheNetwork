@@ -1,8 +1,8 @@
 # Week 1 - Dam Vulnerable Web App(DVWA)
-This week we are using DVWA for our incident response demo. DVWA provides a broken webapp that is ready to be hacked out of the box. Docker was platform of choice because if a container becomes corrupted just restart it :).
+This week we are using DVWA for our incident response demo. DVWA provides a vulnerable webapp that is ready to be hacked out of the box.
 
 ## Presentation
-Intro to IR: https://docs.google.com/presentation/d/1SOx2SieLxJHPF1jzgPRR2ax-q90MurRFvVshQwSP46s/edit?usp=sharing
+Intro to IR: https://docs.google.com/presentation/d/1URpDkIjIGJbsgWn-Dqu-diC3PAdERRVYj4I2FfBWvqk/edit?usp=sharing
 
 ## Setup demo
 ### Init
@@ -13,8 +13,6 @@ Intro to IR: https://docs.google.com/presentation/d/1SOx2SieLxJHPF1jzgPRR2ax-q90
 
 ### WebGUI setup
 0. Browse to `http://<Doocker IP addr>` 
-0. Select "Create/Reset database" at the bottom
-0. Select "Login"
 0. Login
     1. username: admin
     1. password: password
@@ -24,6 +22,8 @@ Intro to IR: https://docs.google.com/presentation/d/1SOx2SieLxJHPF1jzgPRR2ax-q90
 
 ## Perform red teaming
 ### Nikto scanner
+0. Spin up Kali Linux VM
+0. Open terminal
 0. nikto -host http://dvwa.hackinglab.beer
 
 ### Zip, upload and unzip c99.php
