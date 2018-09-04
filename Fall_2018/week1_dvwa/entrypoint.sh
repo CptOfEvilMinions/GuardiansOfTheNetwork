@@ -26,6 +26,9 @@ cat /tmp/dvwa.sql | /usr/bin/mysql -u root dvwa
 # Stop MySQL
 service mysql stop
 
+# Create run dir for sshd
+mkdir /var/run/sshd
+
 # Start supervisor
 exec supervisord -n
 

