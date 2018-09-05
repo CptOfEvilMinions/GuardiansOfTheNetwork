@@ -47,7 +47,7 @@ It is important to understand the machine you are investigating
 0. What is the hacker's user-agent?
     1. `nikto`, `Mozilla*`
 0. What is the operating system(OS) of the hacker's machine?
-    1. `Windows 10`
+    1. `Linux`
 0. What webshell did the attacker use? 
     1. `c99.php`
 0. Where was that webshell uploaded to?
