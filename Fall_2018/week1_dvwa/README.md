@@ -104,15 +104,7 @@ It is important to understand the machine you are investigating
 
 ## Red team challenge
 ### Create red team challenge container
-#### Start container
-0. docker run -d -p 8080:80 infoslack/dvwa
-0. docker ps
-0. docker exec -it [docker container ID] bash
-0. apt update -y && apt install vim htop net-tools git wget -y
-
-#### WebGUI setup
-0. Browse to http://dvwa.hackinglab.beer:8080
-0. Select "Create?reset database" at the bottom
+0. Browse to http://dvwa.hackinglab.beer:9999
 0. Select "Login"
     1. Username: admin
     1. Password: password
@@ -120,18 +112,9 @@ It is important to understand the machine you are investigating
 0. Select "DVWA security" on the left
 0. Set the security level to "medium"
 
-#### Commit Docker container
-0. Enter "exit" to detach from docker container
-0. docker commit [docker container ID] dvwa_pwn_temp
-0. docker stop [docker container ID]
-0. docker run -d -p 8080:80 --restart always --name dvwa_pwn dvwa_pwn_temp
-
 ### Create a PHP reverse shell with Metasploit
 * attack: http://dvwa.hackinglab.beer:8080
 * DO NOT ATTACK port 80
-
-### Restart Docker container if corrupted
-0. docker restart dvwa_pwn
 
 # Resources/Sources
 * https://www.computersecuritystudent.com/SECURITY_TOOLS/DVWA/DVWAv107/lesson14/index.html

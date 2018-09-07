@@ -8,6 +8,14 @@ services:
       - "5000:22"
     volumes:
       - dvwa-logs:/var/log
+  dvwa_attack:
+    build: .
+    restart: always
+    ports:
+      - "9999:80"
+    volumes:
+      - dvwa-logs-attack:/var/log
 
 volumes:
   dvwa-logs:
+  dvwa-logs-attack:
