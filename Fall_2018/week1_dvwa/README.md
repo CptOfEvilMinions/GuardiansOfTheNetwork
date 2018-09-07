@@ -113,7 +113,7 @@ It is important to understand the machine you are investigating
 0. Set the security level to "medium"
 
 ### Create a PHP reverse shell with Metasploit
-* attack: http://dvwa.hackinglab.beer:8080
+* attack: http://dvwa.hackinglab.beer:9090
 * DO NOT ATTACK port 80
 
 # Resources/Sources
