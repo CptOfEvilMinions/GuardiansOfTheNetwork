@@ -1,0 +1,15 @@
+FROM alpine:latest
+
+RUN apk update
+RUN apk add squid curl
+
+
+RUN /bin/chown -R squid:squid /var/cache/squid
+RUN /bin/chown -R squid:squid /var/log/squid
+RUN /usr/sbin/squid -z
+RUN sleep 5
+
+COPY squid.conf /etc/squid/squid.conf
+
+
+CMD ["squid", "-NYCd 1"]

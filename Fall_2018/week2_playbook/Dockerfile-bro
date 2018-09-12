@@ -1,0 +1,42 @@
+FROM ubuntu:18.04
+
+# Install OpenSSH
+RUN apt-get update -y && apt-get install openssh-server  -y
+
+# Install Bro and Bro pkg manager
+RUN apt-get install bro broctl python3-pip git -y
+RUN pip3 install bro-pkg
+RUN bro-pkg autoconfig
+
+# Github: https://github.com/sethhall/credit-card-exposure
+RUN bro-pkg refresh
+RUN bro-pkg install sethhall/credit-card-exposure --force
+
+# Setup Bro
+RUN broctl install
+
+# Copy suepervisor configs
+RUN apt-get install supervisor -y 
+COPY supervisor.conf /etc/supervisor.conf
+
+# Install iptables
+RUN apt-get install iptables dnsutils curl -y
+
+# Setup proxy
+ENV http_proxy="http://squid:3128"
+ENV https_proxy="http://squid:3128"
+
+# Setup python3
+RUN apt-get install python3 python3-pip
+RUN pip3 install requests
+
+# Expose ports
+# 5002 - SSH
+EXPOSE 5002
+
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Entrypoint script
+CMD ["/entrypoint.sh"]

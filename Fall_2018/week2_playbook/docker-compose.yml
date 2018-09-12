@@ -1,0 +1,32 @@
+version: '3.1'
+services:
+  squid:
+    build:
+      context: .
+      dockerfile: Dockerfile-squid
+    restart: always
+    ports:
+      - 3128:3128
+  bro:
+    build:
+      context: .
+      dockerfile: Dockerfile-bro
+    restart: always
+    ports:
+      - "5002:22"
+    volumes:
+      - bro-logs:/var/log/bro
+    secrets:
+      - guardian-pass
+    links:
+      - squid
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+  
+volumes:
+  bro-logs:
+
+secrets:
+  guardian-pass:
+    external: true
