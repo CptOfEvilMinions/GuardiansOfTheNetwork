@@ -17,16 +17,21 @@ services:
     volumes:
       - bro-logs:/var/log/bro
     secrets:
-      - guardian-pass
+      - guardian_pass
+      - temp
     links:
       - squid
     cap_add:
       - NET_ADMIN
       - NET_RAW
-  
+      
+secrets:
+  guardian_pass:
+    external: true
+  temp:
+    external: true
+
 volumes:
   bro-logs:
 
-secrets:
-  guardian-pass:
-    external: true
+

@@ -9,8 +9,6 @@ Post incident response presentation: https://docs.google.com/presentation/d/1rkP
 0. `echo <password> | sudo docker secret create guardian-pass -`
 0. docker-compose up -d
 
-## Scripting challenge
-
 
 ## Red team challenge
 The Docker stack for this week has Bro installed on it with the PII detector plugin. Create a script to exfiltrate the credit-card.dump file from the box to a remote machine WITHOUT being caught by BRO. 
