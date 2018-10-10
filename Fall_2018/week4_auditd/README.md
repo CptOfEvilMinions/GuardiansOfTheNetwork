@@ -2,7 +2,7 @@
 This week we are using DVWA for our incident response demo again. DVWA provides a vulnerable webapp that is ready to be hacked out of the box. Graylog will act as our logging server.
 
 ## Presentation
-AuditD and logging systems: 
+AuditD and logging systems: https://docs.google.com/presentation/d/1HiLPQ6p8dZak0xOhoN66NFmos5l11Bwbkvl5hHuep7E/edit?usp=sharing
 
 ## Setup demo
 ### Init
