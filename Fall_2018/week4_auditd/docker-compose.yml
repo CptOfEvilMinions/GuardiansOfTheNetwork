@@ -7,7 +7,7 @@ services:
       - "8080:80"
       - "5000:22"
     networks:
-      - frontend
+      - default
       - backend
     volumes:
       - dvwa-logs:/var/log
@@ -23,9 +23,12 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.6.12
     environment:
       - http.host=0.0.0.0
-      # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
+      - transport.host=localhost
+      - network.host=0.0.0.0
+      # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.6/security-settings.html#general-security-settings
       - xpack.security.enabled=false
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      #- bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
     ulimits:
       memlock:
         soft: -1
@@ -43,6 +46,9 @@ services:
       # Password: admin
       - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
       - GRAYLOG_WEB_ENDPOINT_URI=http://127.0.0.1:9000/api
+    depends_on:
+      - mongo
+      - elasticsearch
     links:
       - mongo
       - elasticsearch
@@ -54,16 +60,17 @@ services:
     restart: unless-stopped
     volumes:
       - graylog-graylog-journal:/usr/share/graylog/data/journal
+      - graylog-graylog-config:/usr/share/graylog/data/config
   nginx:
     build:
       context: .
       dockerfile: Dockerfile-nginx
+    networks:
+      - default
+      - backend
     ports:
       - 80:80
       - 443:443
-    networks:
-      - frontend
-      - backend
     restart: unless-stopped
 
 volumes:
@@ -72,7 +79,8 @@ volumes:
   graylog-es-data:
   graylog-mongo-data:
   graylog-graylog-journal:
+  graylog-graylog-config:
 
 networks:
-  frontend:
   backend:
+  frontend:

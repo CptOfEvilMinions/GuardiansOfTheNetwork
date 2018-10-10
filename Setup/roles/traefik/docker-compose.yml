@@ -1,0 +1,30 @@
+version: '3.4'
+services:
+  traefik:
+    image: traefik:v1.6.6-alpine
+    command: --web --docker --logLevel=INFO
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - default
+      - web
+    labels:
+      - "traefik.frontend.rule=Host:hackinglab.beer"
+      - "traefik.port=8080" 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /srv/docker/traefik/traefik.toml:/traefik.toml:ro
+      - /srv/docker/traefik/acme.json:/acme.json
+
+  whoami:
+    image: emilevauge/whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:whoami.hackinglab.beer"
+      - "traefik.docker.network=web"
+    
+networks:
+  web:

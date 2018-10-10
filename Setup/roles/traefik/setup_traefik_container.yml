@@ -1,0 +1,47 @@
+########################################################################
+# Install/Setup Traefik
+########################################################################
+- name: Create directory for traefik
+  file:
+    path: /srv/docker/traefik
+    state: directory
+
+- name: Create build directory for traefik
+  file:
+    path: /srv/docker/traefik/build
+    state: directory
+
+- name: Create build directory for traefik
+  file:
+    path: /srv/docker/traefik/acme
+    state: directory
+
+# - name: Copy acme.json
+#   template:
+#     src: conf/traefik/acme.json
+#     dest: /srv/docker/traefik/acme.json
+#     mode: 0600
+
+- name: Copy traefik conf
+  template:
+    src: conf/traefik/traefik.toml
+    dest: /srv/docker/traefik/traefik.toml
+
+- name: Copy build files
+  copy:
+    src: roles/traefik/docker-compose.yml
+    dest: /srv/docker/traefik/build/docker-compose.yml
+
+- name: Spin up container
+  docker_service:
+    project_src: '/srv/docker/traefik/build'
+
+####################################################################
+#  Slack notification
+####################################################################
+- name: Send slack notification when done
+  slack:
+    token: "{{ slack_token }}"
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Setup Traefik - {{ ansible_nodename }}'
+    channel: "{{ slack_channel }}"
+  when: slack_token != None

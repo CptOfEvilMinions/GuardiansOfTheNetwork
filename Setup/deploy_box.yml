@@ -2,4 +2,5 @@
   become: yes
   become_user: root
   tasks:
-    - import_tasks: roles/docker/setup_docker.yml
+    #- import_tasks: roles/docker/setup_docker.yml
+    - import_tasks: roles/traefik/setup_traefik_container.yml

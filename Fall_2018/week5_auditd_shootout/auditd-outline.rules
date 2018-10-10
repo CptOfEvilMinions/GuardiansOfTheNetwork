@@ -1,0 +1,13 @@
+# Remove any existing rules
+-D
+
+# Buffer Size
+## Feel free to increase this if the machine panic's
+-b 8192
+
+
+################################### Beginning of YOUR rules ############################################
+
+
+
+###################################### End of YOUR rules ##############################################

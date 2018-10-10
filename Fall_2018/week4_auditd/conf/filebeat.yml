@@ -2,7 +2,6 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/apache2/*.log
     - /var/log/mysql/*.log
     - /var/log/apt/*.log
     - /var/log/btmp
@@ -10,8 +9,21 @@ filebeat.inputs:
     - /var/log/dpkg.log
     - /var/log/faillog
     - /var/log/lastlog
-    - /var/log/mysql.*
     - /var/log/wtmp
+- type: log 
+  enabled: true
+  paths:
+    - /var/log/mysql/*.log
+    - /var/log/mysql.*
+  fields:
+    mysql: true
+- type: log 
+  enabled: true
+  paths:
+    - /var/log/apache2/*.log
+  fields:
+    apache: true
+
 output.logstash:
   # The Logstash hosts
   hosts: ["graylog:5044"]

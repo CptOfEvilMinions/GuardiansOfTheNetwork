@@ -135,3 +135,6 @@ It is important to understand the machine you are investigating
 
 # Resources/Sources
 * https://www.computersecuritystudent.com/SECURITY_TOOLS/DVWA/DVWAv107/lesson14/index.html
+* http://docs.graylog.org/en/2.4/pages/installation/docker.html
+* https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+* https://hub.docker.com/r/graylog2/graylog/
