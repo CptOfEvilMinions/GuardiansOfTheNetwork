@@ -21,11 +21,15 @@ AuditD and logging systems:
 0. Continue to red teaming section
 
 ### Graylog Webgui setup
-0. Browse to `http://graylog.hackinglab.beer:8080` 
+0. Browse to `http://dvwa.hackinglab.beer` 
 0. Login
     1. username: admin
     1. password: admin
-0. 
+0. Select "System" at the top then "Inputs"
+0. Select "Beats" for input type and select "Launch new input"
+    1. Select node
+    1. Enter "Beats input" for title
+    1. Select "save"
 
 ## Perform red teaming
 ### Nikto scanner
@@ -65,8 +69,11 @@ AuditD and logging systems:
 0. Use c99.php web shell to download dump
 
 ## Incident reponse demo
-### Connecting to machine
-0. ssh guardian@dvwa.hackinglab.beer -p5000
+### Connecting to Graylog
+Browse to `http://dvwa.hackinglab.beer` 
+0. Login
+    1. username: admin
+    1. password: admin
 
 ### Understanding the machine
 It is important to understand the machine you are investigating
@@ -96,32 +103,35 @@ It is important to understand the machine you are investigating
 0. Give a brief description how the attacker stole the data?
 0. Lookup three mitigations for next week.
 
-## Scripting challenges
-0. Create a Github account and repo called “DFIRtooklit”
-    1. Choose your own repo name
-    1. Repo can be private or public -- your choice - mine is private
-    1. If you don’t create a repo you won't receive any points.
-0. Create a script in with a programming language of your choice to do everything in the “understanding the machine” section, items listed below, and then add three of your own.
-    1. Create a script(s) that will parse webserver logs for:
-    1. Unique list(no duplicates) of user ip addresses
-    1. Unique list(no duplicates) of URIs 
-    1. Unique list(no duplicates) of CMDs run by c99
-    1. Unique list(no duplicates) of CMD responses by c99
-    1. OUTPUT MUST BE PRETTY
+
+## IR challenge
+0. Browse to `http://dvwa.hackinglab.beer` 
+0. Login
+    1. username: admin
+    1. password: admin
+0. Select "Dashboard" at the top
+0. Select "Create Dashboard" 
+    1. Enter a name
+    1. Enter a description
+    1. Select "Save"
+0. Select your new dashboard
+0. Create widgets to display:
+    1. Histogram of log data
+    1. Histogram of traffic
+    1. Top 10 user-agents from web logs
+    1. Top 10 operating systems from web logs
+    1. Top 10 browsers from web logs
+    1. Top 10 IP addresses from web logs
+    1. Top 10 URL's visited from web logs
+    1. Top 10 IP from SSH logs
+    1. Widget of your choosing to display command injection
+
 
 ## Red team challenge
-### Create red team challenge container
-0. Browse to http://dvwa.hackinglab.beer:9999
-0. Select "Login"
-    1. Username: admin
-    1. Password: password
-0. Login
-0. Select "DVWA security" on the left
-0. Set the security level to "medium"
-
-### Create a PHP reverse shell with Metasploit
-* attack: http://dvwa.hackinglab.beer:9090
-* DO NOT ATTACK port 80
+### Disable logging
+0. Easy: Discover a way to disable the logging feature between DVWA and Graylog. 
+0. Hard: Discover a way to modify the logging to hide your activities.
+    1. The logging mechanism must still send logs
 
 # Resources/Sources
 * https://www.computersecuritystudent.com/SECURITY_TOOLS/DVWA/DVWAv107/lesson14/index.html

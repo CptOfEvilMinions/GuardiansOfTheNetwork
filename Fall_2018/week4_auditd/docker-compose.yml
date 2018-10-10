@@ -66,7 +66,6 @@ services:
       - backend
     restart: unless-stopped
 
-
 volumes:
   dvwa-logs:
   dvwa-logs-attack:
