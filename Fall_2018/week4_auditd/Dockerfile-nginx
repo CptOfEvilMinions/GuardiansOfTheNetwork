@@ -1,0 +1,19 @@
+FROM nginx:latest
+
+RUN apt-get update -y && apt-get install openssl -y
+
+# Generate cert
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -subj "/C=US/ST=NY/L=Rochester/O=Hackinglab/OU=Hackinglab.beer/CN=hackinglab.beer" \
+    -keyout /etc/ssl/private/nginx-selfsigned.key \
+    -out /etc/ssl/certs/nginx-selfsigned.crt
+
+RUN openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+
+COPY conf/nginx_graylog.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80 443
+
+STOPSIGNAL SIGTERM
+
+CMD ["nginx", "-g", "daemon off;"]
