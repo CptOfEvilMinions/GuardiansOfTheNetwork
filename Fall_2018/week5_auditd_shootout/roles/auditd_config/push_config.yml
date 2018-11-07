@@ -1,0 +1,17 @@
+####################################################################
+# Push config
+####################################################################
+- name: Push config
+  template:
+    src: conf/auditd_conf/auditd.conf
+    dest: /etc/audit/auditd.conf
+    
+####################################################################
+# Slack notification
+####################################################################
+- name: Send slack notification when done
+  slack:
+    token: "{{ slack_token }}"
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Pushed AuditD config - {{ ansible_nodename }}'
+    channel: "{{ slack_channel }}"
+  when: slack_token != None

@@ -1,0 +1,5 @@
+- hosts: auditd
+  become: yes
+  become_user: root
+  tasks:
+    - import_tasks: roles/auditd_config/push_config.yml

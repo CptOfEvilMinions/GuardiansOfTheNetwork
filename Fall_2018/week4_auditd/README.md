@@ -131,7 +131,6 @@ It is important to understand the machine you are investigating
     1. Top 10 IP from SSH logs
     1. Widget of your choosing to display command injection
 
-
 ## Red team challenge
 ### Disable logging
 0. Easy: Discover a way to disable the logging feature between DVWA and Graylog. 
